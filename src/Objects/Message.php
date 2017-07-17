@@ -8,6 +8,11 @@ use Generator;
 
 class Message implements Type, JsonSerializable
 {
+    public const TYPE_READ = 'read';
+    public const TYPE_DELIVERY = 'delivery';
+    public const TYPE_POSTBACK = 'postback';
+    public const TYPE_TEXT = 'text';
+    public const TYPE_ATTACHMENT = 'attachments';
     protected $sender;
     protected $recipient;
     protected $timestamp;
@@ -32,22 +37,22 @@ class Message implements Type, JsonSerializable
             $this->seq = $message['message']['seq'];
             
             if (isset($message['message']['text'])) {
-                $this->type = 'text';
+                $this->type = self::TYPE_TEXT;
                 $this->text = $message['message']['text'];
 
                 if (isset($message['message']['quick_reply'])) {
                     $this->payload= $message['message']['quick_reply']['payload'];
                 }
             } elseif (isset($message['message']['attachments'])) {
-                $this->type = 'attachments';
+                $this->type = self::TYPE_ATTACHMENT;
                 $this->attachments = $message['message']['attachments'];
             }
         } elseif (isset($message['read'])) {
-            $this->type = 'read';
+            $this->type = self::TYPE_READ;
         } elseif (isset($message['delivery'])) {
-            $this->type = 'delivery';
+            $this->type = self::TYPE_DELIVERY;
         } elseif (isset($message['postback'])) {
-            $this->type = 'postback';
+            $this->type = self::TYPE_POSTBACK;
             $this->postback = $message['postback']['payload'];
         }
     }
