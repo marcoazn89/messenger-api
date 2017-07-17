@@ -39,6 +39,21 @@ try {
 }
 ```
 
+Get User Profile:
+```php
+try {
+	$api = new GraphApi(new GuzzleHttp\Client(), [
+	    'api' => '',
+	    'version' => 'v2.6',
+	    'token' => ''
+	]);
+
+	$profile = $api->getUserData("1049225035154243");
+} catch (Throwable $e) {
+	// Something went wrong
+}
+```
+
 Send messages:
 ```php
 try {
