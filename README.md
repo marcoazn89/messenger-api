@@ -48,7 +48,7 @@ try {
 	    'token' => ''
 	]);
 
-	$profile = $api->getUserData("1049225035154243");
+	$profile = $api->getUserData("user id");
 } catch (Throwable $e) {
 	// Something went wrong
 }
