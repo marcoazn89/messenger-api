@@ -12,7 +12,7 @@ class WebhookService
             if (!empty($entry['messaging'])) {
                 foreach ($entry['messaging'] as $obj) {
                     $msg = new Message;
-                    $msg->extractRecievedData($obj);
+                    $msg->extractFromData($obj);
                     yield $msg;
                 }
             } else {

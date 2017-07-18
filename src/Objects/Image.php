@@ -1,10 +1,10 @@
 <?php
 namespace Messenger\Objects;
 
-use Messenger\Objects\Interfaces\Attachment;
+use Messenger\Objects\Interfaces\Receivable;
 use JsonSerializable;
 
-class Image extends Attachment implements JsonSerializable
+class Image implements Receivable, JsonSerializable
 {
     protected $url;
     protected $stickerId;
@@ -55,7 +55,7 @@ class Image extends Attachment implements JsonSerializable
     public function jsonSerialize(): array
     {
         $data = [
-            'attachment' => [
+            'Receivable' => [
                 'type' => 'image',
                 'payload' => [
                     'url' => $this->url

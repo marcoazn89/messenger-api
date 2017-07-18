@@ -1,10 +1,9 @@
 <?php
 namespace Messenger\Objects;
 
-use Messenger\Objects\Interfaces\Deliverable;
 use JsonSerializable;
 
-class Text implements Deliverable, JsonSerializable
+class Text implements JsonSerializable
 {
     protected $text;
     protected $quickReplies;

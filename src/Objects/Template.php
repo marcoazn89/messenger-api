@@ -1,11 +1,11 @@
 <?php
 namespace Messenger\Objects;
 
-use Messenger\Objects\Interfaces\Attachment;
+use Messenger\Objects\Interfaces\Receivable;
 use JsonSerializable;
 use InvalidArgumentException;
 
-class Template extends Attachment implements JsonSerializable
+class Template implements Receivable, JsonSerializable
 {
     public const TYPE_BUTTON = 'button';
     public const TYPE_GENERIC = 'generic';

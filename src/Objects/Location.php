@@ -1,9 +1,9 @@
 <?php
 namespace Messenger\Objects;
 
-use Messenger\Objects\Interfaces\Attachment;
+use Messenger\Objects\Interfaces\Receivable;
 
-class Location extends Attachment
+class Location implements Receivable
 {
     protected $title;
     protected $url;

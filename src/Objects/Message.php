@@ -1,12 +1,12 @@
 <?php
 namespace Messenger\Objects;
 
-use Messenger\Objects\Interfaces\{Type, Attachment};
+use Messenger\Objects\Interfaces\Receivable;
 use Messenger\Exceptions\MessageException;
 use JsonSerializable;
 use Generator;
 
-class Message implements Type, JsonSerializable
+class Message implements Receivable, JsonSerializable
 {
     public const TYPE_READ = 'read';
     public const TYPE_DELIVERY = 'delivery';
@@ -25,7 +25,7 @@ class Message implements Type, JsonSerializable
     protected $attachmentObj;
     protected $postaback;
 
-    public function extractRecievedData(array $message): void
+    public function extractFromData(array $message): void
     {
         $this->sender = $message['sender']['id'];
         $this->recipient = new Recipient();
@@ -109,7 +109,7 @@ class Message implements Type, JsonSerializable
         $this->textObj = $text;
     }
 
-    public function setAttachment(Attachment $attachment)
+    public function setAttachment(Receivable $attachment)
     {
         $this->type = 'attachments';
         $this->attachmentObj = $attachment;
