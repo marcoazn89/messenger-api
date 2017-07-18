@@ -1,5 +1,7 @@
 Messenger Api
 -------------
+This is a library that wraps around the [Facebook Messenger API] (https://developers.facebook.com/docs/messenger-platform).
+Will add missing functionality as needed/requested.
 
 Requirements
 -------------
