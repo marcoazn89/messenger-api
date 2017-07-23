@@ -27,8 +27,6 @@ class GraphApi
         $url = "{$this->apiUrl}/me/" . self::API_MESSAGES . "?access_token={$this->token}";
         $msg = $message->getDeliveryMessage();
         $msg['notification_type'] = $notify;
-
-        //die(json_encode($msg));
         
         try {
             $response = $this->http->request('POST', $url, [

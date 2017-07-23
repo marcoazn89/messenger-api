@@ -1,17 +1,26 @@
 <?php
 namespace Messenger\Objects;
 
+use Messenger\Objects\Interfaces\Receivable;
+
 use JsonSerializable;
 
-class Text implements JsonSerializable
+class Text implements Receivable, JsonSerializable
 {
     protected $text;
-    protected $quickReplies;
+    protected $quickReply;
+    protected $quickReplies = [];
 
     public function __construct(string $text = '', array $quickReplies = [])
     {
         $this->text = $text;
         $this->quickReplies = $quickReplies; 
+    }
+
+    public function extractFromData(array $data): void
+    {
+        $this->text = $data['text'];
+        $this->quickReply = $data['quick_reply'];
     }
 
     public function getText(): string
@@ -24,6 +33,11 @@ class Text implements JsonSerializable
         $this->text = $text;
     }
 
+    public function getQuickReply(): ?string
+    {
+        return $this->quickReply;
+    }
+
     public function getQuickreplies(): array
     {
         return $this->quickReplies;
@@ -32,6 +46,11 @@ class Text implements JsonSerializable
     public function addQuickreply(QuickReply $reply): void
     {
         $this->quickReplies[] = $reply;
+    }
+
+    public function getType(): string
+    {
+        return 'text';
     }
 
     public function jsonSerialize(): array

@@ -36,6 +36,11 @@ class Location implements Receivable
         return $this->url;
     }
 
+    public function getType(): string
+    {
+        return 'location';
+    }
+
     public function setUrl(string $url): void
     {
         $this->url = $url;

@@ -17,13 +17,13 @@ class Message implements Receivable, JsonSerializable
     protected $recipient;
     protected $timestamp;
     protected $message;
-    protected $payload;
+    protected $quickReply;
     protected $type;
     protected $text;
     protected $attachments;
     protected $textObj;
     protected $attachmentObj;
-    protected $postaback;
+    protected $postback;
 
     public function extractFromData(array $message): void
     {
@@ -41,7 +41,7 @@ class Message implements Receivable, JsonSerializable
                 $this->text = $message['message']['text'];
 
                 if (isset($message['message']['quick_reply'])) {
-                    $this->payload= $message['message']['quick_reply']['payload'];
+                    $this->quickReply = $message['message']['quick_reply']['payload'];
                 }
             } elseif (isset($message['message']['attachments'])) {
                 $this->type = self::TYPE_ATTACHMENT;
@@ -57,14 +57,21 @@ class Message implements Receivable, JsonSerializable
         }
     }
 
-    public function getRecievedMessage(): Generator
+    public function getReceivedText(): Text
     {
-        if ($this->type === 'text') {
-            yield new Text($this->text);
-        } elseif ($this->type === 'attachments') {
-            foreach ($this->attachments as $attachment) {
-                yield AttachmentFactory::get($attachment);
-            }
+        $text = new Text($this->text);
+        $text->extractFromData([
+            'text' => $this->text,
+            'quick_reply' => $this->quickReply
+        ]);
+
+        return $text;
+    }
+
+    public function getReceivedAttachments(): Generator
+    {
+        foreach ($this->attachments as $attachment) {
+            yield AttachmentFactory::get($attachment);
         }
     }
 
@@ -109,17 +116,12 @@ class Message implements Receivable, JsonSerializable
         $this->textObj = $text;
     }
 
-    public function setAttachment(Receivable $attachment)
+    public function setAttachment($attachment)
     {
         $this->type = 'attachments';
         $this->attachmentObj = $attachment;
     }
-
-    public function getPayload()
-    {
-        return $this->payload;
-    }
-
+    
     public function getPostback()
     {
         return $this->postback;
@@ -131,7 +133,7 @@ class Message implements Receivable, JsonSerializable
     }
 
     public function jsonSerialize(): array
-    {
+    {        
         $data = [
             'recipient' => $this->recipient
         ];

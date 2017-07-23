@@ -5,7 +5,7 @@ use Messenger\Objects\Interfaces\Receivable;
 use JsonSerializable;
 use InvalidArgumentException;
 
-class Template implements Receivable, JsonSerializable
+class Template implements JsonSerializable
 {
     public const TYPE_BUTTON = 'button';
     public const TYPE_GENERIC = 'generic';
@@ -21,12 +21,6 @@ class Template implements Receivable, JsonSerializable
     public function __construct(string $type)
     {
         $this->type = $type;
-    }
-
-    public function extractFromData(array $data): void
-    {
-        $this->url = $data['payload']['url'];
-        $this->stickerId = $data['sticker_id'] ?? null;
     }
 
     public function setText(string $text): void

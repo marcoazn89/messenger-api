@@ -52,6 +52,11 @@ class Image implements Receivable, JsonSerializable
         $this->quickReplies[] = $reply;
     }
 
+    public function getType(): string
+    {
+        return 'image';
+    }
+
     public function jsonSerialize(): array
     {
         $data = [
